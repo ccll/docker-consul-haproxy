@@ -16,7 +16,7 @@
 
 # Reload haproxy gracefully.
 sleep 1
-docker kill -s HUP haproxy
+kill -s HUP $(pidof haproxy)
 
 # For all frondend...
 [[range services]]
