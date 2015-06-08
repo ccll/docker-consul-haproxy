@@ -1,2 +1,2 @@
-consul-template: consul-template -config /etc/consul-template.conf
+consul_template: consul-template -config /etc/consul-template.conf
 haproxy: /usr/local/bin/run-haproxy.sh
