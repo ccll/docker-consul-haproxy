@@ -10,7 +10,14 @@ ADD https://github.com/ccll/consul-template/releases/download/v0.7.0-1/consul-te
 ADD consul-template.conf /etc/consul-template.conf
 ADD haproxy.cfg.ctmpl /etc/haproxy.cfg.ctmpl
 ADD reload-haproxy.sh.ctmpl /usr/local/bin/reload-haproxy.sh.ctmpl
+ADD run-haproxy.sh /usr/local/bin/run-haproxy.sh
 ADD forego.proc /etc/forego.proc
+
+# chmod
+RUN chmod u+rx,go+r /usr/local/bin/consul-template
+RUN chmod u+rx,go+r /usr/local/bin/forego
+RUN chmod u+rx,go+r /usr/local/bin/run-haproxy.sh
+RUN chmod u+rx,go+r /usr/local/bin/reload-haproxy.sh.ctmpl
 
 # Command
 CMD ["forego", "start", "-f", "/etc/forego.proc"]
