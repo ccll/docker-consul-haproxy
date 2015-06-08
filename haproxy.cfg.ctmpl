@@ -1,0 +1,30 @@
+global
+  maxconn 256
+  stats socket /var/run/haproxy/stat level admin
+
+defaults
+  mode http
+  timeout connect 5000ms
+  timeout client 50000ms
+  timeout server 50000ms
+
+# For each service group...
+[[range services]]
+  [[$app_port := .Name | regexCapture ".*_([0-9]+)" 1]]
+  # And only for services with tag 'proxy', and it's name matchs pattern "<name>_<port>"...
+  [[if and (.Tags | containsItem "proxy") (ne $app_port "" )]]
+    # Create a frontend for this service group.
+    frontend [[.Name]]-frontend
+      bind *:[[$app_port]]
+      default_backend [[.Name]]-backend
+
+    # And a backend for this service group.
+    backend [[.Name]]-backend
+      balance roundrobin
+      # Create a server for each service instance.
+      [[range service .Name]]
+      server [[.Node]] [[.Address]]:[[.Port]]
+      [[end]]
+  [[end]]
+[[end]]
+

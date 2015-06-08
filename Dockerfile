@@ -5,3 +5,12 @@ ADD https://godist.herokuapp.com/projects/ddollar/forego/releases/current/linux-
 
 # Install ccll/consul-template (a hacked version with support for customizable template delimeters)
 ADD https://github.com/ccll/consul-template/releases/download/v0.7.0-1/consul-template /usr/local/bin/consul-template
+
+# Install config files
+ADD consul-template.conf /etc/consul-template.conf
+ADD haproxy.cfg.ctmpl /etc/haproxy.cfg.ctmpl
+ADD reload-haproxy.sh.ctmpl /usr/local/bin/reload-haproxy.sh.ctmpl
+ADD forego.proc /etc/forego.proc
+
+# Command
+CMD ["forego", "start", "-f", "/etc/forego.proc"]
