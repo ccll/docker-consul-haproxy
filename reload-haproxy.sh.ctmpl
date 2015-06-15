@@ -16,7 +16,7 @@
 
 # Reload haproxy gracefully.
 sleep 1
-kill -s HUP $(pidof haproxy)
+supervisorctl restart haproxy
 
 # For all frondend...
 [[range services]]
