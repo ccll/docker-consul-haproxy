@@ -8,6 +8,12 @@ RUN apk add supervisor=3.1.3-r1
 # Install haproxy
 RUN apk add haproxy=1.5.12-r0
 
+# Install iproute2 ('tc' command)
+RUN apk add iproute2
+
+# Install libnl3 ('nl-qdisc-add' command)
+RUN apk add libnl3
+
 # Purge APK cache
 RUN rm -rf /var/cache/apk/*
 
